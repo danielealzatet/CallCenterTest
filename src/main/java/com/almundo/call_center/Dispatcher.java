@@ -17,6 +17,13 @@ public class Dispatcher implements Runnable{
 		new Thread(this).start();  		
 	}
 	
+	
+	/**
+	 * @param dataMessage
+	 * Two alternatives for Extra/plus 2. Use put to stop additional calls until there is 
+	 * space to new ones. Use add to send an exception and that way let the client know there
+	 * is not enough lines available.
+	 */
 	public void dispatchCall(DataMessage dataMessage) {
 		try{
 			queue.put(dataMessage);	
@@ -27,6 +34,11 @@ public class Dispatcher implements Runnable{
 		System.out.println("Adding to queue: " + Thread.currentThread().getName());
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 * Alternavie for Extra/plus 1. If there is not enough Agents to attend calls, the calls 
+	 * return back to queue so next available agent will take that call.
+	 */
 	@Override
 	public void run() {
 		DataMessage dataMessage = null;
